@@ -4,12 +4,12 @@ public class Player {
   Player(String name, String shapeChoosed) {
     this.name = name;
     this.shapeChoosed = shapeChoosed;
-    this.jogadas = 5;
+    this.moves = 5;
   }
 
   private String name;
   private String shapeChoosed;
-  private Integer jogadas;
+  private Integer moves;
 
   public String getName() {
     return this.name;
@@ -27,11 +27,11 @@ public class Player {
     this.shapeChoosed = shapeChoosed;
   }
 
-  public Integer getJogadas() {
-    return this.jogadas;
+  public Integer getMoves() {
+    return this.moves;
   }
 
-  public void setJogadas(Integer jogadas) {
-    this.jogadas = jogadas;
+  public void setMoves(Integer moves) {
+    this.moves = moves;
   }
 }

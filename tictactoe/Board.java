@@ -3,9 +3,13 @@ package tictactoe;
 public class Board {
   Board() {
     this.squares = new Square[3][3];
+    this.columns = new String[] { "A", "B", "C" };
+    this.rows = new String[] { "1", "2", "3" };
   }
 
   private Square[][] squares;
+  private String[] columns;
+  private String[] rows;
 
   public Square[][] getSquares() {
     return squares;
@@ -15,11 +19,24 @@ public class Board {
     this.squares = squares;
   }
 
+  public String[] getColumns() {
+    return this.columns;
+  }
+
+  public void setColumns(String[] columns) {
+    this.columns = columns;
+  }
+
+  public String[] getRows() {
+    return this.rows;
+  }
+
+  public void setRows(String[] rows) {
+    this.rows = rows;
+  }
+
   public void createBoard() {
     try {
-      String[] columns = { "A", "B", "C" };
-      String[] rows = { "1", "2", "3" };
-
       for (int i = 0; i < rows.length; i++) {
         for (int j = 0; j < columns.length; j++) {
           Square square = new Square(columns[j], rows[i]);
@@ -34,45 +51,43 @@ public class Board {
 
   public void showBoard() {
     try {
+      System.out.println("   " + this.columns[0] + "   " + this.columns[1] + "   " + this.columns[2]);
       for (int i = 0; i < 3; i++) {
+        System.out.print(this.rows[i] + "  ");
         for (int j = 0; j < 3; j++) {
           System.out.print(j != 2 ? this.squares[i][j].getShape() + " | " : this.squares[i][j].getShape() + "\n");
         }
-        System.out.print(i != 2 ? "----------\n" : "");
+        System.out.print(i != 2 ? "  -----------\n" : "");
       }
     } catch (Exception e) {
       System.out.println("We found a problem showing the board!" + e);
     }
   }
 
-  public void setMove(int column, int row, String shape) {
+  public Boolean setMove(int column, int row, String shape) {
     try {
-      Square newSquare = this.squares[column][row];
+      Square newSquare = this.squares[row][column];
 
       if (newSquare.isFilled()) {
         System.out.println("This space is already filled!");
-        return;
+        return false;
       }
 
       newSquare.setFilled(true);
       newSquare.setShape(shape);
 
-      this.squares[column][row] = newSquare;
+      this.squares[row][column] = newSquare;
 
       this.showBoard();
 
-      int win = this.checkBoard();
-
-      if (win == 1)
-        System.out.println("\nO jogador 1 ganhou");
-      if (win == -1)
-        System.out.println("\nO jogador 2 ganhou");
+      return true;
     } catch (Exception e) {
-      System.out.println("We found a problem showing the board!" + e);
+      System.out.println("We found a problem setting the move!" + e);
+      return false;
     }
   }
 
-  private int checkBoard() {
+  public int checkBoard() {
     if (this.checkRows() == 1)
       return 1;
     if (this.checkColumns() == 1)
